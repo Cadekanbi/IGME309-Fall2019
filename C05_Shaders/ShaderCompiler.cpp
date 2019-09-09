@@ -51,6 +51,22 @@ GLuint LoadShaders(const char* vertex_file_path, const char* fragment_file_path)
 	glShaderSource(fragmentShaderID, 1, &fragmentSource, NULL);
 	glCompileShader(fragmentShaderID);
 #pragma endregion
+#pragma region Complementary Vertex and Fragment shaders
+	/*const GLchar* pszVertexShader = R"glsl(
+		#version 330
+		in vec3 ptPosition;
+		void Main() {
+			gl_Position = vec4(ptPosition, 1);
+		}
+	)glsl";
+	const GLchar* pszPixelShader = R"glsl(
+		#version 330
+		out vec4 fragment;
+		void Main() {
+			fragmentt = vec4(1.0f, 0.0f, 0.0f, 1.0f);
+		}
+	)glsl";*/
+#pragma endregion
 #pragma region Compile Shader Program
 	// Link the vertex and fragment shader into a shader program
 	GLuint shaderProgramID = glCreateProgram();

@@ -163,7 +163,7 @@ void AppClass::Release()
 	glBindVertexArray(0); // Unbind VAO
 	glDeleteVertexArrays(1, &vao);
 
-	if (window)
+	if (window != nullptr)
 	{
 		delete window;
 		window = nullptr;

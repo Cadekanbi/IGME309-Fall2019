@@ -105,19 +105,25 @@ int main()
 		sf::Event event;
 		while (window.pollEvent(event))
 		{
-			if (event.type == sf::Event::Closed)
-			{
-				// end the program
-				running = false;
-			}
-			else if (event.type == sf::Event::Resized)
-			{
-				// adjust the viewport when the window is resized
-				glViewport(0, 0, event.size.width, event.size.height);
-			}
-			else if (event.type == sf::Event::KeyPressed)
-			{
-				running = false;
+			switch (event.type) {
+
+				case sf::Event::Closed: {
+					// end the program
+					running = false;
+				} break;
+				case sf::Event::Resized: {
+					// adjust the viewport when the window is resized
+					glViewport(0, 0, event.size.width, event.size.height);
+				} break;
+				case sf::Event::KeyPressed: {
+					if (event.key.code == 36) {
+						running = false;
+					}
+				} break;
+
+				default: {
+					// Don't do anything
+				} break;
 			}
 		}
 
