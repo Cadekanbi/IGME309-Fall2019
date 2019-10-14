@@ -1,11 +1,18 @@
 #include "AppClass.h"
+
+#include "MyMesh.h"
+
 void Application::InitVariables(void)
 {
 	////Change this to your name and email
-	//m_sProgrammer = "Alberto Bobadilla - labigm@rit.edu";
+	m_sProgrammer = "Cobey Adekanbi - cja1093@rit.edu";
 
-	////Alberto needed this at this position for software recording.
-	//m_pWindow->setPosition(sf::Vector2i(710, 0));
+	// m_pTriangle = MyMesh::MakeTriangle(0.5f);
+	m_pQuad = MyMesh::Make(MyMesh::type::CIRCLE, 0.5f, 9);
+	// m_pTriangle->Init();
+
+	// m_pTriangle->SetScale(0.5f);
+
 }
 void Application::Update(void)
 {
@@ -22,12 +29,18 @@ void Application::Display(void)
 {
 	// Clear the screen
 	ClearScreen();
+
+	if (m_pTriangle != nullptr)
+		m_pTriangle->Draw();
+
+	if (m_pQuad != nullptr);
+		m_pQuad->Draw();
 	
 	// draw a skybox
 	m_pMeshMngr->AddSkyboxToRenderList();
 	
 	//render list call
-	m_uRenderCallCount = m_pMeshMngr->Render();
+	//m_uRenderCallCount = m_pMeshMngr->Render();
 
 	//clear the render list
 	m_pMeshMngr->ClearRenderList();

@@ -12,14 +12,42 @@ void MyMesh::GenerateCircle(float a_fRadius, int a_nSubdivisions, vector3 a_v3Co
 	if (a_nSubdivisions > 360)
 		a_nSubdivisions = 360;
 
-	/*
-		Calculate a_nSubdivisions number of points around a center point in a radial manner
-		then call the AddTri function to generate a_nSubdivision number of faces
-	*/
+	float theta = PI * 2 / a_nSubdivisions;
+
+	// Vertex 1 (Center)
+	vector3 center = vector3(0.0f, 0.0f, 0.0f);
+
+	// Vertex 2
+	vector3 prev = vector3(a_fRadius * cos(0), a_fRadius * sin(0), 0.0f);
+
+	vector3 first = prev;
+
+	for (int i = 1; i <= a_nSubdivisions; i++) {
+
+		// Next vertex
+		vector3 next;
+		if (i == a_nSubdivisions) {
+			next = first;
+		}
+		else {
+			next = vector3(a_fRadius * cos(theta * i), a_fRadius * sin(theta * i), 0.0f);
+		}
+
+		AddVertexPosition(center);
+		AddVertexPosition(prev);
+		AddVertexPosition(next);
+		
+		AddVertexColor(a_v3Color);
+		AddVertexColor(a_v3Color);
+		AddVertexColor(a_v3Color);
+
+		prev = next;
+	}
 
 	// Adding information about color
 	CompleteMesh(a_v3Color);
 	CompileOpenGL3X();
+
 }
 void MyMesh::Init(void)
 {
@@ -151,6 +179,10 @@ void MyMesh::Render(matrix4 a_mProjection, matrix4 a_mView, matrix4 a_mModel)
 	// Get the GPU variables by their name and hook them to CPU variables
 	GLuint MVP = glGetUniformLocation(nShader, "MVP");
 	GLuint wire = glGetUniformLocation(nShader, "wire");
+	
+	static float value = 0.0f;
+	a_mModel = glm::translate(a_mModel, glm::vec3(value, 0.0f, 0.0f));
+	value += 0.01f;
 
 	//Final Projection of the Camera
 	matrix4 m4MVP = a_mProjection * a_mView * a_mModel;
